@@ -18,12 +18,20 @@ def clean_screen():
             pass
     os.system('cls' if os.name == 'nt' else 'clear')
 
-#errors exceptions for requests
+#exceptions for requests in error cases
 def fectch_pokemon(query):
     response = requests.get(f"{api_url}{query}", timeout=timeout)
     return response.json
 
-
+#input level verification
+def read_level(prompt):
+    level_str = input(prompt).strip()
+    if not level_str:
+        return None
+    level = int(level_str)
+    if level < 1:
+        raise ValueError
+    return level
      
 def add_pokemon():
     clean_screen()
@@ -34,7 +42,7 @@ def add_pokemon():
         input("\nPokecampo não pode estar vazio! Preencha o campo.")
         return
     
-    url = f"https://pokeapi.co/api/v2/pokemon/{add}"
+
     
     try:
         print("Buscando '{add}'...")
