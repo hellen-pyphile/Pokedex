@@ -1,17 +1,22 @@
 #pokecontroller.py
 import os
 import requests
-import pokemodel
 
-from IPython.display import clear_output;
-from pokemodel import load_pokedex
-from pokemodel import new_pokemon
+import pokemodel
+from pokemodel import load_pokedex, save_pokedex, new_pokemon
+
+from IPython.display import clear_output
+
+api_url = "https://pokeapi.co/api/v2/pokemon/"
+timeout = 10
 
 def clean_screen():
-    try:
-        clear_output(wait=True)
-    except ImportError:
-        os.system('cls' if os.name == 'nt' else 'clear')
+    if clear_output is not None:
+        try:
+            clear_output(wait=True)
+        except ImportError:
+            pass
+    os.system('cls' if os.name == 'nt' else 'clear')
         
 def add_pokemon():
     clean_screen()
