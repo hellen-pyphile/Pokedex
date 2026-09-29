@@ -1,8 +1,8 @@
+#pokemondel.py
 import json
 import requests
 import os
-from pokecontroller import add_pokemon
-from pokecontroller import clean_screen
+import pokecontroller 
 
 DATASET = "pokedex.json"
 
@@ -104,7 +104,7 @@ def update_pokemon():
             print("POKEMON não encontrado na POKEDEX.")
             
 def remove_pokemon():
-    clean_screen()
+    pokecontroller.clean_screen()
     pokedex = load_pokedex()
     if not pokedex:
         print("Sua Pokédex está vazia.")

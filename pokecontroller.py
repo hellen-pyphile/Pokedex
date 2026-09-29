@@ -1,6 +1,7 @@
-import json
+#pokecontroller.py
 import os
 import requests
+import pokemodel
 
 from IPython.display import clear_output;
 from pokemodel import load_pokedex
@@ -48,7 +49,7 @@ def add_pokemon():
             
         level = int(level_str)
         
-        new_pokemon() #verificar se isso fica aqui mesmo
+        pokemodel.new_pokemon()
         
     except requests.exceptions.HTTPError:
         print("\n\tErro!\n\nPokémon não encontrado na PokeAPI.")
@@ -69,7 +70,7 @@ def reg_pokemon():
         
         for p in sorted(pokedex, key=lambda x: x['id']):
             types = ", ".join(p['tipos'])
-            print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['nivel']:<3} | Tipos: {tipos}")
+            print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['nivel']:<3} | Tipos: {pokemodel.types}")
         print("\t" * 55)
         
         
