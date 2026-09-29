@@ -4,9 +4,9 @@ import pokecontroller
 def menu():
     while True:
         pokecontroller.clean_screen()
-        print("\t POKÉDEX")
+        print("\t POKÉDEX\n")
         print("[1] - Adicionar Pokémon (API)")
-        print("[2] - Listar Meus Pokémons")
+        print("[2] - Listar Meus Pokémon")
         print("[3] - Atualizar Dados")
         print("[4] - Remover Pokémon")
         print("[0] - Sair")

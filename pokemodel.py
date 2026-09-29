@@ -29,6 +29,6 @@ def new_pokemon(data, level):
         "types" : [t['type']['name'] for t in data['types']]
         }
     
-    pokedex.append(new_pokemon)
+    pokedex.append(new)
     save_pokedex(pokedex)
     return new

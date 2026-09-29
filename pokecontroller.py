@@ -19,9 +19,9 @@ def clean_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 #exceptions for requests in error cases
-def fectch_pokemon(query):
+def fetch_pokemon(query):
     response = requests.get(f"{api_url}{query}", timeout=timeout)
-    return response.json
+    return response.json()
 
 #input level verification
 def read_level(prompt):
@@ -44,7 +44,7 @@ def add_pokemon():
     
     try:
         print("Buscando '{add}'...")
-        data = fectch_pokemon()
+        data = fetch_pokemon(add)
         
         pokedex = load_pokedex()
         new_id = data['id']
@@ -55,7 +55,7 @@ def add_pokemon():
             print(f"\n- {data['name'].capitalize()} (ID: {new_id} já está na sua POKEDEX!)")
             return
         
-        level = read_level(f"Digite o nivel do seu {data['name'].capitalize()}: ")
+        level = read_level(f"Digite o nível do seu {data['name'].capitalize()}: ")
         if level is None:
             print("\n\tErro!")
             print("\nO POKELEVEL não pode estar vazio.")
@@ -63,7 +63,7 @@ def add_pokemon():
             
         #talvez de problema
         entry = new_pokemon(data, level)
-        print(f"\nSucess0!\n\n{entry['name'].capitalize} foi adicionado à POKEDEX.")
+        print(f"\nSucesso!\n\n{entry['name'].capitalize()} foi adicionado à POKEDEX.")
         
     except requests.exceptions.HTTPError:
         print("\n\tErro!\n\nPokémon não encontrado na PokeAPI.")
@@ -90,7 +90,7 @@ def reg_pokemon():
         #talvez de erro
         for p in sorted(pokedex, key=lambda x: x['id']):
             types = ", ".join(p['types'])
-            print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['level']:<3} | Tipos: {pokemodel.types}")
+            print(f"#{p['id']:03d} | {p['name'].capitalize():<12} | Nível: {p['level']:<3} | Tipos: {pokemodel.types}")
         print("-" * 55)
         
 def update_pokemon():
@@ -107,13 +107,13 @@ def update_pokemon():
         return
 
     for p in pokedex:
-        if str(p["id"]) == search or p["nome"].lower() == search:
-            print(f"\nModificando: {p['nome'].capitalize()} (Nível atual: {p['nivel']})")
+        if str(p["id"]) == search or p["name"].lower() == search:
+            print(f"\nModificando: {p['name'].capitalize()} (Nível atual: {p['level']})")
 
             while True:
-                new_name = input("Novo Pokémon (Nome/ID) (Enter para manter o atual): ").strip().lower()
+                new_name = input("Novo Pokémon (Nome/ID)\n(Enter para manter o atual): ").strip().lower()
                 if not new_name:
-                    break  # Enter: mantém o atual
+                    break  #enter: mantém o atual
 
                 try:
                     print("Consultando PokeAPI...")
@@ -126,9 +126,9 @@ def update_pokemon():
                         continue
 
                     p["id"] = new_id
-                    p["nome"] = data["name"]
-                    p["tipos"] = [t["type"]["name"] for t in data["types"]]
-                    print(f"Sucesso!\n\nIdentidade atualizada para {p['nome'].capitalize()}.")
+                    p["name"] = data["name"]
+                    p["types"] = [t["type"]["name"] for t in data["types"]]
+                    print(f"Sucesso!\n\nIdentidade atualizada para {p['name'].capitalize()}.")
                     break
 
                 except requests.exceptions.HTTPError:
@@ -138,9 +138,9 @@ def update_pokemon():
                     break  # sai do loop em caso de erro de rede
 
             try:
-                new_level = read_level(f"Novo nível para {p['nome'].capitalize()} (Enter para manter): ")
+                new_level = read_level(f"Novo nível para {p['name'].capitalize()} (Enter para manter): ")
                 if new_level is not None:
-                    p["nivel"] = new_level
+                    p["level"] = new_level
             except ValueError:
                 print("Nível inválido. Mantendo o original.")
 
