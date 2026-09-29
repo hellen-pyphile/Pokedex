@@ -1,4 +1,4 @@
-# 🔴 Pokédex CLI — Desafio 4 (Engenharia de Software)
+# 🔴 Pokédex
 
 Aplicação em linha de comando (CLI) desenvolvida em Python para gerenciar uma Pokédex local. O sistema realiza consultas à API pública [PokeAPI](https://pokeapi.co/) para validação e obtenção de dados oficiais dos Pokémons e mantém a persistência local em um arquivo `pokedex.json`.
 
