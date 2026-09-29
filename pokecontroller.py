@@ -39,7 +39,7 @@ def add_pokemon():
             print("\n- {data['name'].capitalize()} (ID: {new_id} já está na sua POKEDEX!)")
             return
         
-        level_str = input("Digite o nivel do seu  {data['name].capitalize()}: ").strip()
+        level_str = input(f"Digite o nivel do seu {data['name].capitalize()}: ").strip(): ")
         
         #empty level
         if not level_str:

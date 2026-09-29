@@ -26,19 +26,19 @@ def save_pokedex():
         
         
 def new_pokemon():
-    new = {
-        "id" = data['id'],
+    new : {
+        "id"  data['id'],
         "name" = data['name'], 
         "level" = level, 
         "types" = [t['type']['name'] for t in data['types']]
-    }
+        }
     
     pokedex.append(new_pokemon)
     save_pokedex(pokedex)
     print(f"\nSucesso!\n\n{data['name'].capitalize()} foi adicionado à POKEDEX.")
     
 def update_pokemon():
-    clean_screen()
+    pokecontroller.clean_screen()
     pokedex = load_pokedex
     
     if not pokedex:
