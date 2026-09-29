@@ -52,10 +52,10 @@ def update_pokemon():
         
         found = False
         for p in pokedex:
-        #busca o Pokémon no seu arquivo JSON
+        #busca o Pokémon no arquivo JSON
             if str(p['id']) == search or p['name'].lower() == search:
                 find = True
-                print(f"\nModificando: {p['name'].capitalize()} (Nível atual: {p['level']})")
+                print(f"\nModificando: {p['name'].capitalize()} (\nNível atual: {p['level']})")
 
                 while True:
                     new_name = input("Novo Pokémon (Nome/ID) (Enter para manter o atual): ").strip().lower()
@@ -84,9 +84,9 @@ def update_pokemon():
                         break 
 
                     except requests.exceptions.HTTPError:
-                        print("Erro: Pokémon não encontrado na PokeAPI. Tente novamente.")
+                        print("Erro!\n\nPokémon não encontrado na PokeAPI. Tente novamente.")
                     except requests.exceptions.ConnectionError:
-                        print("Erro de conexão com a API. Verifique a internet.")
+                        print("Erro de conexão com a API.\nVerifique a internet.")
                         break #sai do loop em caso de erro de rede
 
                 new_level_str = input(f"Novo nível para {p['nome'].capitalize()} (Enter para manter): ").strip()
@@ -104,3 +104,30 @@ def update_pokemon():
             print("POKEMON não encontrado na POKEDEX.")
             
 def remove_pokemon():
+    clean_screen()
+    pokedex = load_pokedex()
+    if not pokedex:
+        print("Sua Pokédex está vazia.")
+        return
+
+    busca = input("Digite o ID do Pokémon para remover: ").strip()
+
+    #entrada vazia
+    if not busca:
+        print("\nErro!\n\n O ID não pode estar vazio!")
+        return
+
+    try:
+        id_remove = int(busca)
+
+        # Verifica se o ID realmente existe antes de recriar a lista
+        if any(p['id'] == id_remove for p in pokedex):
+            # Cria uma nova lista excluindo o Pokémon escolhido
+            nova_pokedex = [p for p in pokedex if p['id'] != id_remove]
+            save_pokedex(nova_pokedex)
+            print(f"\nPokémon com ID {id_remove} foi deletado da Pokédex.")
+        else:
+            print(f"\nID {id_remove} não consta na sua Pokédex.")
+
+    except ValueError:
+        print("\nErro: Por favor, digite um ID numérico válido.")
