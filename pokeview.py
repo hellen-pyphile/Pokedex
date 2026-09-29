@@ -1,6 +1,5 @@
 #pokeview.py
 import pokecontroller
-import pokemodel
 
 def menu():
     while True:
@@ -19,9 +18,9 @@ def menu():
         elif opcao == '2':
             pokecontroller.reg_pokemon()
         elif opcao == '3':
-            pokemodel.update_pokemon()
+            pokecontroller.update_pokemon()
         elif opcao == '4':
-            pokemodel.remove_pokemon()
+            pokecontroller.remove_pokemon()
         elif opcao == '0':
             print("Desligando a Pokédex... Até logo!")
             break
@@ -30,6 +29,6 @@ def menu():
 
         input("\nPressione Enter para continuar...")
 
-# Inicia o programa
+#initializes application
 if __name__ == "__main__":
     menu()

@@ -15,7 +15,7 @@ def load_pokedex():
     return []
 
 #saves pokedex list on .json
-def save_pokedex():
+def save_pokedex(pokedex):
     with open(DATASET, "w", encoding='UTF-8') as f:
         json.dump(pokedex, f, indent=4, ensure_ascii=False)
         
