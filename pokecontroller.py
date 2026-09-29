@@ -42,34 +42,28 @@ def add_pokemon():
         input("\nPokecampo não pode estar vazio! Preencha o campo.")
         return
     
-
-    
     try:
         print("Buscando '{add}'...")
-        response = requests.get(url)
-        response.raise_for_status()
-        data = response.json()
+        data = fectch_pokemon()
         
         pokedex = load_pokedex()
         new_id = data['id']
         
-        #impede duplicatas
+        #prevents duplicates
         if any(p['id'] == new_id for p in pokedex):
             print("\n\tErro!!\n\nO POKEMON:")
-            print("\n- {data['name'].capitalize()} (ID: {new_id} já está na sua POKEDEX!)")
+            print(f"\n- {data['name'].capitalize()} (ID: {new_id} já está na sua POKEDEX!)")
             return
         
-        level_str = input(f"Digite o nivel do seu {data['name].capitalize()}: ").strip(): ")
-        
-        #empty level
-        if not level_str:
+        level = read_level(f"Digite o nivel do seu {data['name'].capitalize()}: ")
+        if level is None:
             print("\n\tErro!")
             print("\nO POKELEVEL não pode estar vazio.")
             return
             
-        level = int(level_str)
-        
-        pokemodel.new_pokemon()
+        #talvez de problema
+        entry = new_pokemon(data, level)
+        print(f"\nSucess0!\n\n{entry['name'].capitalize} foi adicionado à POKEDEX.")
         
     except requests.exceptions.HTTPError:
         print("\n\tErro!\n\nPokémon não encontrado na PokeAPI.")
@@ -77,6 +71,11 @@ def add_pokemon():
         print("\n\tErro!\n\nO nível deve ser um número inteiro válido.")
     except requests.exceptions.ConnectionError:
         print("\n\tErro!\n\nFalha de conexão. Verifique sua internet.")
+    except requests.exceptions.Timeout:
+            print("\n\tErro!\n\nA PokeAPI demorou demais para responder.")
+    except requests.exceptions.RequestException:
+        print("\n\tErro!\n\nFalha inesperada ao consultar a PokeAPI.")
+        
         
 #register pokemon
 def reg_pokemon():
