@@ -87,9 +87,66 @@ def reg_pokemon():
     else:
         print("\t[MINHA POKEDEX]")
         
+        #talvez de erro
         for p in sorted(pokedex, key=lambda x: x['id']):
-            types = ", ".join(p['tipos'])
-            print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['nivel']:<3} | Tipos: {pokemodel.types}")
-        print("\t" * 55)
+            types = ", ".join(p['types'])
+            print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['level']:<3} | Tipos: {pokemodel.types}")
+        print("-" * 55)
         
-        
+def update_pokemon():
+    clean_screen()
+    pokedex = load_pokedex()
+
+    if not pokedex:
+        print("Sua POKEDEX está vazia.")
+        return
+
+    search = input("Digite o POKEMON ou seu ID: ").strip().lower()
+    if not search:
+        print("\n\nPor favor, preencha o campo requisitado.")
+        return
+
+    for p in pokedex:
+        if str(p["id"]) == search or p["nome"].lower() == search:
+            print(f"\nModificando: {p['nome'].capitalize()} (Nível atual: {p['nivel']})")
+
+            while True:
+                new_name = input("Novo Pokémon (Nome/ID) (Enter para manter o atual): ").strip().lower()
+                if not new_name:
+                    break  # Enter: mantém o atual
+
+                try:
+                    print("Consultando PokeAPI...")
+                    data = fetch_pokemon(new_name)
+                    new_id = data["id"]
+
+                    # impede duplicata com outro slot (ignora o próprio)
+                    if new_id != p["id"] and any(o["id"] == new_id for o in pokedex):
+                        print(f"Erro!\n\n{data['name'].capitalize()} já existe em outro slot da sua Pokédex!")
+                        continue
+
+                    p["id"] = new_id
+                    p["nome"] = data["name"]
+                    p["tipos"] = [t["type"]["name"] for t in data["types"]]
+                    print(f"Sucesso!\n\nIdentidade atualizada para {p['nome'].capitalize()}.")
+                    break
+
+                except requests.exceptions.HTTPError:
+                    print("Erro!\n\nPokémon não encontrado na PokeAPI. Tente novamente.")
+                except requests.exceptions.RequestException:
+                    print("Erro de conexão com a API.\nVerifique a internet.")
+                    break  # sai do loop em caso de erro de rede
+
+            try:
+                new_level = read_level(f"Novo nível para {p['nome'].capitalize()} (Enter para manter): ")
+                if new_level is not None:
+                    p["nivel"] = new_level
+            except ValueError:
+                print("Nível inválido. Mantendo o original.")
+
+            save_pokedex(pokedex)
+            print("\nOperação concluída e salva com sucesso!")
+            return
+
+    print("POKEMON não encontrado na POKEDEX.")
+
