@@ -2,7 +2,7 @@ import json
 import os
 import requests
 
-from IPython.display import clear_output; clear_output(wait=True)
+from IPython.display import clear_output;
 from pokemodel import load_pokedex
 from pokemodel import new_pokemon
 
@@ -48,7 +48,7 @@ def add_pokemon():
             
         level = int(level_str)
         
-        new_pokemon()
+        new_pokemon() #verificar se isso fica aqui mesmo
         
     except requests.exceptions.HTTPError:
         print("\n\tErro!\n\nPokémon não encontrado na PokeAPI.")
@@ -57,6 +57,7 @@ def add_pokemon():
     except requests.exceptions.ConnectionError:
         print("\n\tErro!\n\nFalha de conexão. Verifique sua internet.")
         
+#register pokemon
 def reg_pokemon():
     clean_screen()
     pokedex = load_pokedex()
@@ -70,3 +71,5 @@ def reg_pokemon():
             types = ", ".join(p['tipos'])
             print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['nivel']:<3} | Tipos: {tipos}")
         print("\t" * 55)
+        
+        
