@@ -157,15 +157,15 @@ def remove_pokemon():
         print("Sua Pokédex está vazia.")
         return
 
-    busca = input("Digite o ID do Pokémon para remover: ").strip()
-    if not busca:
-        print("\nErro!\n\n O ID não pode estar vazio!")
+    search = input("Digite o ID do Pokémon para remover: ").strip()
+    if not search:
+        print("\nErro!\n\nO ID não pode estar vazio!")
         return
 
     try:
-        id_remove = int(busca)
+        id_remove = int(search)
     except ValueError:
-        print("\nErro: Por favor, digite um ID numérico válido.")
+        print("\nErro!\n\nPor favor, digite um ID numérico válido.")
         return
 
     if any(p["id"] == id_remove for p in pokedex):
