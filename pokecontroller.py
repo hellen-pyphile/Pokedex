@@ -43,7 +43,7 @@ def add_pokemon():
         return
     
     try:
-        print("Buscando '{add}'...")
+        print(f"Buscando '{add}'...")
         data = fetch_pokemon(add)
         
         pokedex = load_pokedex()
@@ -55,7 +55,7 @@ def add_pokemon():
             print(f"\n- {data['name'].capitalize()} (ID: {new_id} já está na sua POKEDEX!)")
             return
         
-        level = read_level(f"Digite o nível do seu {data['name'].capitalize()}: ")
+        level = read_level(f"\nDigite o nível do seu {data['name'].capitalize()}: ")
         if level is None:
             print("\n\tErro!")
             print("\nO POKELEVEL não pode estar vazio.")
@@ -63,7 +63,7 @@ def add_pokemon():
             
         #talvez de problema
         entry = new_pokemon(data, level)
-        print(f"\nSucesso!\n\n{entry['name'].capitalize()} foi adicionado à POKEDEX.")
+        print(f"\nSucesso!\n{entry['name'].capitalize()} foi adicionado à POKEDEX.")
         
     except requests.exceptions.HTTPError:
         print("\n\tErro!\n\nPokémon não encontrado na PokeAPI.")
@@ -90,7 +90,7 @@ def reg_pokemon():
         #talvez de erro
         for p in sorted(pokedex, key=lambda x: x['id']):
             types = ", ".join(p['types'])
-            print(f"#{p['id']:03d} | {p['name'].capitalize():<12} | Nível: {p['level']:<3} | Tipos: {pokemodel.types}")
+            print(f"#{p['id']:03d} | {p['name'].capitalize():<12} | Nível: {p['level']:<3} | Tipos: {types}")
         print("-" * 55)
         
 def update_pokemon():
@@ -108,15 +108,15 @@ def update_pokemon():
 
     for p in pokedex:
         if str(p["id"]) == search or p["name"].lower() == search:
-            print(f"\nModificando: {p['name'].capitalize()} (Nível atual: {p['level']})")
+            print(f"\nModificando: {p['name'].capitalize()} (Nível atual: {p['level']}\n)")
 
             while True:
-                new_name = input("Novo Pokémon (Nome/ID)\n(Enter para manter o atual): ").strip().lower()
+                new_name = input("Novo Pokémon (nome/ID)\n(Enter para manter o atual): ").strip().lower()
                 if not new_name:
                     break  #enter: mantém o atual
 
                 try:
-                    print("Consultando PokeAPI...")
+                    print("\nConsultando PokeAPI...")
                     data = fetch_pokemon(new_name)
                     new_id = data["id"]
 
@@ -128,7 +128,7 @@ def update_pokemon():
                     p["id"] = new_id
                     p["name"] = data["name"]
                     p["types"] = [t["type"]["name"] for t in data["types"]]
-                    print(f"Sucesso!\n\nIdentidade atualizada para {p['name'].capitalize()}.")
+                    print(f"\nSucesso!\n\nIdentidade atualizada para {p['name'].capitalize()}.")
                     break
 
                 except requests.exceptions.HTTPError:

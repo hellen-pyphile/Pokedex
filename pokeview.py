@@ -22,7 +22,7 @@ def menu():
         elif opcao == '4':
             pokecontroller.remove_pokemon()
         elif opcao == '0':
-            print("Desligando a Pokédex... Até logo!")
+            print("Desligando a Pokédex... Até logo!\n")
             break
         else:
             print("Opção inválida.")
