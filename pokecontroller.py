@@ -150,3 +150,26 @@ def update_pokemon():
 
     print("POKEMON não encontrado na POKEDEX.")
 
+def remove_pokemon():
+    clean_screen()
+    pokedex = load_pokedex()
+    if not pokedex:
+        print("Sua Pokédex está vazia.")
+        return
+
+    busca = input("Digite o ID do Pokémon para remover: ").strip()
+    if not busca:
+        print("\nErro!\n\n O ID não pode estar vazio!")
+        return
+
+    try:
+        id_remove = int(busca)
+    except ValueError:
+        print("\nErro: Por favor, digite um ID numérico válido.")
+        return
+
+    if any(p["id"] == id_remove for p in pokedex):
+        save_pokedex([p for p in pokedex if p["id"] != id_remove])
+        print(f"\nPokémon com ID {id_remove} foi deletado da Pokédex.")
+    else:
+        print(f"\nID {id_remove} não consta na sua Pokédex.")

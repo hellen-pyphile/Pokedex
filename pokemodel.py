@@ -37,32 +37,3 @@ def new_pokemon():
     save_pokedex(pokedex)
     print(f"\nSucesso!\n\n{data['name'].capitalize()} foi adicionado à POKEDEX.")
     
-            
-def remove_pokemon():
-    pokecontroller.clean_screen()
-    pokedex = load_pokedex()
-    if not pokedex:
-        print("Sua Pokédex está vazia.")
-        return
-
-    busca = input("Digite o ID do Pokémon para remover: ").strip()
-
-    #entrada vazia
-    if not busca:
-        print("\nErro!\n\n O ID não pode estar vazio!")
-        return
-
-    try:
-        id_remove = int(busca)
-
-        # Verifica se o ID realmente existe antes de recriar a lista
-        if any(p['id'] == id_remove for p in pokedex):
-            # Cria uma nova lista excluindo o Pokémon escolhido
-            nova_pokedex = [p for p in pokedex if p['id'] != id_remove]
-            save_pokedex(nova_pokedex)
-            print(f"\nPokémon com ID {id_remove} foi deletado da Pokédex.")
-        else:
-            print(f"\nID {id_remove} não consta na sua Pokédex.")
-
-    except ValueError:
-        print("\nErro: Por favor, digite um ID numérico válido.")
