@@ -57,4 +57,16 @@ def add_pokemon():
     except requests.exceptions.ConnectionError:
         print("\n\tErro!\n\nFalha de conexão. Verifique sua internet.")
         
+def reg_pokemon():
+    clean_screen()
+    pokedex = load_pokedex()
+    
+    if not pokedex:
+        print("Sua pokedex está vazia.\nVá capturar novos POKEMONS!")
+    else:
+        print("\t[MINHA POKEDEX]")
         
+        for p in sorted(pokedex, key=lambda x: x['id']):
+            types = ", ".join(p['tipos'])
+            print(f"#{p['id']:03d} | {p['nome'].capitalize():<12} | Nível: {p['nivel']:<3} | Tipos: {tipos}")
+        print("\t" * 55)
