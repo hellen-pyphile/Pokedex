@@ -1,13 +1,8 @@
 #pokemondel.py
 import json
-import requests
 import os
-import pokecontroller 
 
 DATASET = "pokedex.json"
-
-
-url = f"https://pokeapi.co/api/v2/pokemon/{add}"
 
 def load_pokedex():
     if os.path.exists(DATASET):
