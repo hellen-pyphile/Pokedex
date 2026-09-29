@@ -17,7 +17,14 @@ def clean_screen():
         except ImportError:
             pass
     os.system('cls' if os.name == 'nt' else 'clear')
-        
+
+#errors exceptions for requests
+def fectch_pokemon(query):
+    response = requests.get(f"{api_url}{query}", timeout=timeout)
+    return response.json
+
+
+     
 def add_pokemon():
     clean_screen()
     add = input("Adicionar um novo POKEMON (nome ou ID): ").strip().lower()
